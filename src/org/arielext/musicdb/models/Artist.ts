@@ -1,4 +1,5 @@
 import Album from "./Album";
+import Letter from "./Letter";
 
 export default class Artist {
 
@@ -6,6 +7,9 @@ export default class Artist {
   bio: string;
   art: string;
   albums: Array<Album> = [];
+  letter: Letter;
+  albumArtist: string;
+  sortName: string;
 
   constructor(json: any) {
     this.name = json.artist;
@@ -14,6 +18,6 @@ export default class Artist {
     this.bio = json.bio;
   }
   url() {
-    return `/${encodeURIComponent(this.name)}`;
+    return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.name)}/`;
   }
 }

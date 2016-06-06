@@ -12,7 +12,7 @@ export default class Letter {
     this.escapedLetter = encodeURIComponent(this.letter);
   };
   url() {
-    return `/${escapedLetter}`;
+    return `/letter/${escapedLetter}/`;
   };
   private getFirstLetterOf(name:string):string {
     return this.stripFromName(name, 'the ');

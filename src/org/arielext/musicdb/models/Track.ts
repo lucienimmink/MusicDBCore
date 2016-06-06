@@ -32,6 +32,6 @@ export default class Track {
   }
 
   url() {
-    return `/${encodeURIComponent(this.artist.name)}/${encodeURIComponent(this.album.name)}/${encodeURIComponent(this.title)}`;
+    return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.album.name)}/track/${encodeURIComponent(this.title)}`;
   }
 }

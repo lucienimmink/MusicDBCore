@@ -4,6 +4,7 @@ import Track from "./Track";
 export default class Album {
 
   name:string;
+  sortName:string;
   artist:Artist;
   tracks:Array<Track> = [];
   year:number;
@@ -15,6 +16,6 @@ export default class Album {
     this.year = json.year;
   }
   url() {
-    return `/${encodeURIComponent(this.artist.name)}/${encodeURIComponent(this.name)}`;
+    return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.name)}`;
   }
 }

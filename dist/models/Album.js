@@ -15,7 +15,7 @@
             this.year = json.year;
         }
         Album.prototype.url = function () {
-            return "/" + encodeURIComponent(this.artist.name) + "/" + encodeURIComponent(this.name);
+            return "/letter/" + this.artist.letter.escapedLetter + "/artist/" + encodeURIComponent(this.artist.name) + "/album/" + encodeURIComponent(this.name);
         };
         return Album;
     }());

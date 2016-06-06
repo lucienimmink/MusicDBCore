@@ -37,6 +37,7 @@ export class musicdbcore {
                 artist = this.artists[artist.sortName];
             } else {
                 letter.artists.push(artist);
+                artist.letter = letter;
                 this.artists[artist.sortName] = artist;
                 this.totals.artists++;
             }

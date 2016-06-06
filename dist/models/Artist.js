@@ -16,7 +16,7 @@
             this.bio = json.bio;
         }
         Artist.prototype.url = function () {
-            return "/" + encodeURIComponent(this.name);
+            return "/letter/" + this.letter.escapedLetter + "/artist/" + encodeURIComponent(this.name) + "/";
         };
         return Artist;
     }());

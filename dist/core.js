@@ -44,6 +44,7 @@
                 }
                 else {
                     letter.artists.push(artist);
+                    artist.letter = letter;
                     this.artists[artist.sortName] = artist;
                     this.totals.artists++;
                 }
