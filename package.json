@@ -2,7 +2,7 @@
   "name": "musicdbcore",
   "version": "1.0.0",
   "description": "Core of MusicDB Next",
-  "main": "dist/index.js",
+  "main": "dist/core.js",
   "dependencies": {
 
   },

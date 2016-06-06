@@ -1,4 +1,4 @@
-export class MusicDBCore {
+export class musicdbcore {
     private const VERSION:string = "1.0.0"; 
     constructor () {
         console.log('Core init', VERSION);

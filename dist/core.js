@@ -7,15 +7,15 @@
     }
 })(function (require, exports) {
     "use strict";
-    var MusicDBCore = (function () {
-        function MusicDBCore() {
+    var musicdbcore = (function () {
+        function musicdbcore() {
             this.VERSION = "1.0.0";
             console.log('Core init', VERSION);
         }
-        MusicDBCore.prototype.setSourceJson = function (json) {
+        musicdbcore.prototype.setSourceJson = function (json) {
             console.log("this json has " + json.length + " records");
         };
-        return MusicDBCore;
+        return musicdbcore;
     }());
-    exports.MusicDBCore = MusicDBCore;
+    exports.musicdbcore = musicdbcore;
 });
