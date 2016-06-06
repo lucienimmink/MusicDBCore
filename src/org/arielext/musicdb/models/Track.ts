@@ -16,12 +16,12 @@ export default class Track {
     this.id = json.id;
     this.duration = json.duration;
     this.title = json.title;
+    this.source = new MediaSource(json);
     this.disc = json.disc || this.guessBySource(json);
   }
 
   private guessBySource(json: any): number {
-    let source = new MediaSource(json);
-    let guessable = source.url;
+    let guessable = this.source.url;
     let discs: Array<number> = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     for (let i of discs) {
       if (guessable.indexOf(` - ${i}.`) !== -1 || guessable.indexOf(`(${i}) - `) !== -1 || guessable.indexOf(`CD${i}`) !== -1 || guessable.indexOf(`\\${i}-`) !== -1) {

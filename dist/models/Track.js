@@ -13,11 +13,11 @@
             this.id = json.id;
             this.duration = json.duration;
             this.title = json.title;
+            this.source = new MediaSource_1.default(json);
             this.disc = json.disc || this.guessBySource(json);
         }
         Track.prototype.guessBySource = function (json) {
-            var source = new MediaSource_1.default(json);
-            var guessable = source.url;
+            var guessable = this.source.url;
             var discs = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
             for (var _i = 0, discs_1 = discs; _i < discs_1.length; _i++) {
                 var i = discs_1[_i];
