@@ -1,0 +1,39 @@
+{
+  "name": "musicdbcore",
+  "version": "1.0.0",
+  "description": "Core of MusicDB Next",
+  "main": "dist/index.js",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "rimraf": "^2.5.2",
+    "typings": "^1.0.4",
+    "typescript": "^1.8.10",
+    "npm-run-all": "^2.1.1"
+  },
+  "scripts": {
+    "prepublish": "typings install",
+    "start": "npm-run-all build dev",
+    "debug": "npm-run-all remove compile:sourcemap",
+    "dev": "npm-run-all --parallel serve compile:watch test:watch",
+    "serve": "nodemon ./dist/index.js",
+    "build": "npm run remove && npm run compile",
+    "remove": "rimraf ./dist",
+    "test": "mocha test/*.test.ts --require ts-node/register",
+    "test:watch": "mocha test/*.test.ts --require ts-node/register --watch --watch-extensions ts",
+    "compile:sourcemap": "tsc --sourceMap",
+    "compile:watch": "tsc --watch",
+    "compile": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucienimmink/MusicDBCore.git"
+  },
+  "author": "lucien immink",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lucienimmink/MusicDBCore/issues"
+  },
+  "homepage": "https://github.com/lucienimmink/MusicDBCore#readme"
+}
