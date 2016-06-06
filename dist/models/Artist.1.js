@@ -11,8 +11,6 @@
         function Artist(json) {
             this.albums = [];
             this.name = json.artist;
-            this.albumArtist = json.albumArtist;
-            this.sortName = this.albumArtist || this.name.toUpperCase();
             this.bio = json.bio;
         }
         Artist.prototype.url = function () {

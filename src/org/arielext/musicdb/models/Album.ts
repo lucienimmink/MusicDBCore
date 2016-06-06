@@ -1,20 +1,20 @@
-/// <reference path="MusicDBObject.ts" />
-namespace MusicDBObject {
-  export class Album implements ObjectWithUrl {
+import Artist from "./Artist";
+import Track from "./Track";
 
-    name:string;
-    artist:Artist;
-    tracks:Array<any>;
-    year:number;
-    art:string;
+export default class Album {
 
-    constructor (json:any){
-      this.name = json.album;
-      this.year = json.year;
-    }
+  name:string;
+  artist:Artist;
+  tracks:Array<Track> = [];
+  year:number;
+  art:string;
 
-    url() {
-      return `/${encodeURIComponent(this.artist.name)}/${encodeURIComponent(this.name)}`;
-    }
+  constructor (json:any){
+    this.name = json.album;
+    this.sortName = this.name.toUpperCase();
+    this.year = json.year;
+  }
+  url() {
+    return `/${encodeURIComponent(this.artist.name)}/${encodeURIComponent(this.name)}`;
   }
 }

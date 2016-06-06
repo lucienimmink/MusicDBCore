@@ -10,7 +10,8 @@
     "rimraf": "^2.5.2",
     "typings": "^1.0.4",
     "typescript": "^1.8.10",
-    "npm-run-all": "^2.1.1"
+    "npm-run-all": "^2.1.1",
+    "lodash": "^4.13.1"
   },
   "scripts": {
     "prepublish": "typings install",

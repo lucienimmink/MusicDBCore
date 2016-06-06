@@ -1,16 +1,19 @@
-namespace MusicDBObject {
-  export class Artist implements ObjectWithUrl {
+import Album from "./Album";
 
-    name: string;
-    bio: string;
-    art: string;
+export default class Artist {
 
-    constructor(json: any) {
-      this.name = json.name;
-      this.bio = json.bio;
-    }
-    url() {
-      return `/${encodeURIComponent(this.name)}`;
-    }
+  name: string;
+  bio: string;
+  art: string;
+  albums: Array<Album> = [];
+
+  constructor(json: any) {
+    this.name = json.artist;
+    this.albumArtist = json.albumArtist;
+    this.sortName = this.albumArtist || this.name.toUpperCase();
+    this.bio = json.bio;
+  }
+  url() {
+    return `/${encodeURIComponent(this.name)}`;
   }
 }
