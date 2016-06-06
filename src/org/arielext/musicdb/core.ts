@@ -1,3 +1,6 @@
+/// <reference path="./models/MusicDBObject.d.ts" />
+import * as MusicDBObject from "./models/MusicDBObject";
+
 export class musicdbcore {
     private const VERSION:string = "1.0.0"; 
     constructor () {

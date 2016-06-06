@@ -3,10 +3,12 @@
         var v = factory(require, exports); if (v !== undefined) module.exports = v;
     }
     else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports"], factory);
+        define(["require", "exports", "./models/MusicDBObject"], factory);
     }
 })(function (require, exports) {
     "use strict";
+    /// <reference path="./models/MusicDBObject.d.ts" />
+    var MusicDBObject = require("./models/MusicDBObject");
     var musicdbcore = (function () {
         function musicdbcore() {
             this.VERSION = "1.0.0";
