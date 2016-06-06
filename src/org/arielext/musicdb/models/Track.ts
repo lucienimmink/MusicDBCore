@@ -1,8 +1,8 @@
-namespace Objects {
+namespace MusicDBObject {
   export class Track implements ObjectWithUrl {
 
     id:string;
-    source:Source;
+    source:MediaSource;
     artist:Artist;
     album:Album;
     duration:number;
@@ -17,7 +17,7 @@ namespace Objects {
     }
 
     private guessBySource(json:any):number {
-      let source = new Source(json);
+      let source = new MediaSource(json);
       let guessable = source.url;
       let discs:Array<number> = [1,2,3,4,5,6,7,8,9,10];
       for (let i of discs) {

@@ -1,4 +1,4 @@
-namespace Objects {
+namespace MusicDBObject {
   export class Artist implements ObjectWithUrl {
 
     name: string;

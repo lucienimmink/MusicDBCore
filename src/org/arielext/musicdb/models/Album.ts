@@ -1,4 +1,5 @@
-namespace Objects {
+/// <reference path="MusicDBObject.ts" />
+namespace MusicDBObject {
   export class Album implements ObjectWithUrl {
 
     name:string;

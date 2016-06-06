@@ -4,7 +4,7 @@
     "declaration": true,
     "noImplicitAny": true,
     "suppressExcessPropertyErrors": true,
-    "module": "system",
+    "module": "umd",
     "noEmitHelpers": false,
     "target": "es5",
     "outDir": "./dist"

@@ -1,5 +1,5 @@
-namespace Objects {
-  export class Source {
+namespace MusicDBObject {
+  export class MediaSource {
     url:string;
 
     constructor(json:any) {
