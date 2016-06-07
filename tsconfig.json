@@ -2,7 +2,7 @@
   "compilerOptions": {
     "removeComments": false,
     "declaration": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "suppressExcessPropertyErrors": true,
     "module": "umd",
     "noEmitHelpers": false,

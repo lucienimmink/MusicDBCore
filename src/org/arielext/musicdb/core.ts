@@ -17,51 +17,90 @@ export class musicdbcore {
         artists: 0,
         albums: 0,
         tracks: 0,
-        playingTime: 0
+        playingTime: 0,
+        parsingTime: 0
     }
 
     constructor() {
         console.log(`Core init ${VERSION}`);
-    }
-    private parseLine(line: any): void {
-        let letter = new Letter(line);
-        if (this.letters[letter.letter]) {
-            letter = this.letters[letter.letter];
-        } else {
-            this.letters[letter.letter] = letter;
-        }
 
-        let artist = new Artist(line);
-        if (this.artists[artist.sortName]) {
-            artist = this.artists[artist.sortName];
+    }
+
+    private instanceIfPresent(core: any, key: string, map: INameToValueMap, obj: Object, excecuteIfNew: Function): any {
+        var ret: any = null;
+        if (map[key]) {
+            ret = map[key];
         } else {
+            map[key] = obj;
+            ret = obj;
+            excecuteIfNew(core);
+        }
+        return ret;
+    }
+
+    private handleLetter(letter: Letter): Letter {
+        return this.instanceIfPresent(this, letter.letter, this.letters, letter, function (core: any) { });
+    }
+    private handleArtist(letter: Letter, artist: Artist): Artist {
+        return this.instanceIfPresent(this, artist.sortName, this.artists, artist, function (core: any) {
             letter.artists.push(artist);
             artist.letter = letter;
-            this.artists[artist.sortName] = artist;
-            this.totals.artists++;
-        }
-
-        let album = new Album(line);
-        if (this.albums[album.sortName]) {
-            album = this.albums[album.sortName];
-        } else {
+            core.totals.artists++;
+        });
+    }
+    private handleAlbum(artist: Artist, album: Album): Album {
+        return this.instanceIfPresent(this, album.sortName, this.albums, album, function (core: any) {
             album.artist = artist;
             artist.albums.push(album);
-            this.albums[album.sortName] = album;
-            this.totals.albums++;
-        }
+            core.totals.albums++;
+        });
+    }
+    private handleTrack(artist: Artist, album: Album, track: Track): Track {
+        return this.instanceIfPresent(this, track.id, this.tracks, track, function (core: any) {
+            core.totals.tracks++;
+            core.totals.playingTime += track.duration;
+            track.artist = artist;
+            track.album = album;
+            album.tracks.push(track);
+        });
+    }
+
+    private parseLine(line: any): void {
+        let letter: Letter = new Letter(line);
+        letter = this.handleLetter(letter);
+
+        let artist = new Artist(line);
+        artist = this.handleArtist(letter, artist);
+
+        let album = new Album(line);
+        album = this.handleAlbum(artist, album);
 
         let track = new Track(line);
-        this.tracks[track.id] = track;
-        this.totals.tracks++;
-        this.totals.playingTime += track.duration;
+        track = this.handleTrack(artist, album, track);
+    };
 
-        track.artist = artist;
-        track.album = album;
-
-        album.tracks.push(track);
+    private parseTree(tree: any): void {
+        for (let l in tree) {
+            let letter: Letter = new Letter(tree[l]);
+            letter = this.handleLetter(letter);
+            for (let a in tree[l].artists) {
+                // add artist in letter
+                let artist: Artist = new Artist(tree[l].artists[a]);
+                artist = this.handleArtist(letter, artist);
+                for (let aa in tree[l].artists[a].albums) {
+                    // add albums in artist in letter
+                    let album: Album = new Album(tree[l].artists[a].albums[aa]);
+                    album = this.handleAlbum(artist, album);
+                    for (let t in tree[l].artists[a].albums[aa].tracks) {
+                        let track: Track = new Track(tree[l].artists[a].albums[aa].tracks[t]);
+                        track = this.handleTrack(artist, album, track);
+                    }
+                }
+            }
+        }
     };
     parseSourceJson(json: any): void {
+        let start:number = new Date().getTime();
         if (json.length) {
             // this json is flat; all lines in the json is 1 track
             console.log(`this json has ${json.length} records`);
@@ -70,50 +109,8 @@ export class musicdbcore {
             }
         } else if (json.tree) {
             // this json is build up as an object; with nested data
-            for (let l in json.tree) {
-                let letter: Letter = new Letter(json.tree[l]);
-                // add letter
-                if (this.letters[letter.letter]) {
-                    letter = this.letters[letter.letter];
-                } else {
-                    this.letters[letter.letter] = letter;
-                }
-                for (let a in json.tree[l].artists) {
-                    // add artist in letter
-                    let artist: Artist = new Artist(json.tree[l].artists[a]);
-                    if (this.artists[artist.sortName]) {
-                        artist = this.artists[artist.sortName];
-                    } else {
-                        letter.artists.push(artist);
-                        artist.letter = letter;
-                        this.artists[artist.sortName] = artist;
-                        this.totals.artists++;
-                    }
-                    for (let aa in json.tree[l].artists[a].albums) {
-                        // add albums in artist in letter
-                        let album: Album = new Album(json.tree[l].artists[a].albums[aa]);
-                        if (this.albums[album.sortName]) {
-                            album = this.albums[album.sortName];
-                        } else {
-                            album.artist = artist;
-                            artist.albums.push(album);
-                            this.albums[album.sortName] = album;
-                            this.totals.albums++;
-                        }
-                        for (let t in json.tree[l].artists[a].albums[aa].tracks) {
-                            let track:Track = new Track(json.tree[l].artists[a].albums[aa].tracks[t]);
-                            this.tracks[track.id] = track;
-                            this.totals.tracks++;
-                            this.totals.playingTime += track.duration;
-
-                            track.artist = artist;
-                            track.album = album;
-
-                            album.tracks.push(track);
-                        }
-                    }
-                }
-            }
+            this.parseTree(json.tree);
         }
+        this.totals.parsingTime += (new Date().getTime() - start);
     }
 }

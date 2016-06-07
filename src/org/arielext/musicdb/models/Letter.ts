@@ -30,4 +30,28 @@ export default class Letter {
     }
     return c;
   }
+  sortArtistsBy(sortkey:string = 'name', direction:string = 'asc'):void {
+    this.artists.sort((a,b) => {
+      if (sortkey.indexOf('.') !== -1) {
+        let sorter = sortkey.split(".");
+          if (a[sorter[0]][sorter[1]] < b[sorter[0]][sorter[1]]) {
+          return (direction === 'asc') ? -1 : 1;
+        } else if (a[sorter[0]][sorter[1]] > b[sorter[0]][sorter[1]]) {
+          return (direction === 'asc') ? 1 : -1;
+        } else {
+          return 0;
+        }  
+      }
+      if (a[sortkey] < b[sortkey]) {
+        return (direction === 'asc') ? -1 : 1;
+      } else if (a[sortkey] > b[sortkey]) {
+        return (direction === 'asc') ? 1 : -1;
+      }
+      return 0;
+    });
+  }
+  sortAndReturnArtistsBy(sortkey:string = 'name', direction = 'asc'):Array<Artist> {
+    this.sortArtistsBy(sortkey, direction);
+    return this.artists;
+  }
 }
