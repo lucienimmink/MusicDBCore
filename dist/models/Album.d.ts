@@ -2,6 +2,7 @@ import Artist from "./Artist";
 import Track from "./Track";
 export default class Album {
     name: string;
+    sortName: string;
     artist: Artist;
     tracks: Array<Track>;
     year: number;

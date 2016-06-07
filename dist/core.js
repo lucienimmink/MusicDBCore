@@ -11,9 +11,9 @@
     var Album_1 = require('./models/Album');
     var Track_1 = require('./models/Track');
     var Letter_1 = require('./models/Letter');
+    var VERSION = "1.0.0";
     var musicdbcore = (function () {
         function musicdbcore() {
-            this.VERSION = "1.0.0";
             this.artists = [];
             this.albums = [];
             this.tracks = [];
@@ -24,7 +24,7 @@
                 tracks: 0,
                 playingTime: 0
             };
-            console.log("Core init " + this.VERSION);
+            console.log("Core init " + VERSION);
         }
         musicdbcore.prototype.parseSourceJson = function (json) {
             console.log("this json has " + json.length + " records");

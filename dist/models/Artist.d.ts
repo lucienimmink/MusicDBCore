@@ -6,6 +6,8 @@ export default class Artist {
     art: string;
     albums: Array<Album>;
     letter: Letter;
+    albumArtist: string;
+    sortName: string;
     constructor(json: any);
     url(): string;
 }

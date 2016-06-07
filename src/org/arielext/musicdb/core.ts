@@ -4,8 +4,10 @@ import Album from './models/Album';
 import Track from './models/Track';
 import Letter from './models/Letter';
 
+const VERSION:string = "1.0.0";
+
 export class musicdbcore {
-    private const VERSION:string = "1.0.0"; 
+
 
     protected artists:Array<Artist> = [];
     protected albums:Array<Album> = [];
@@ -17,10 +19,10 @@ export class musicdbcore {
         albums: 0,
         tracks: 0,
         playingTime: 0
-    } 
+    }
 
     constructor () {
-        console.log(`Core init ${this.VERSION}`);
+        console.log(`Core init ${VERSION}`);
     }
     parseSourceJson(json:any) {
         console.log(`this json has ${json.length} records`);
@@ -58,7 +60,7 @@ export class musicdbcore {
             track.album = album;
 
             album.tracks.push(track);
-            
+
         }
     }
 }

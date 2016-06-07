@@ -16,7 +16,7 @@
         }
         ;
         Letter.prototype.url = function () {
-            return "/letter/" + escapedLetter + "/";
+            return "/letter/" + this.escapedLetter + "/";
         };
         ;
         Letter.prototype.getFirstLetterOf = function (name) {
