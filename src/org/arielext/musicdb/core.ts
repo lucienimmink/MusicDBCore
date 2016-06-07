@@ -8,11 +8,10 @@ const VERSION:string = "1.0.0";
 
 export class musicdbcore {
 
-
-    protected artists:Array<Artist> = [];
-    protected albums:Array<Album> = [];
-    protected tracks:Array<Track> = [];
-    protected letters:Array<Letter> = [];
+    protected artists: INameToValueMap = {};
+    protected albums: INameToValueMap = {};
+    protected tracks: INameToValueMap = {};
+    protected letters: INameToValueMap = {};
 
     protected totals:any = {
         artists: 0,

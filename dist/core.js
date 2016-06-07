@@ -14,10 +14,10 @@
     var VERSION = "1.0.0";
     var musicdbcore = (function () {
         function musicdbcore() {
-            this.artists = [];
-            this.albums = [];
-            this.tracks = [];
-            this.letters = [];
+            this.artists = {};
+            this.albums = {};
+            this.tracks = {};
+            this.letters = {};
             this.totals = {
                 artists: 0,
                 albums: 0,
