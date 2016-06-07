@@ -55,6 +55,7 @@
                 this.totals.albums++;
             }
             var track = new Track_1.default(line);
+            this.tracks[track.id] = track;
             this.totals.tracks++;
             this.totals.playingTime += track.duration;
             track.artist = artist;
@@ -75,6 +76,7 @@
                 // this json is build up as an object; with nested data
                 for (var l in json.tree) {
                     var letter = new Letter_1.default(json.tree[l]);
+                    // add letter
                     if (this.letters[letter.letter]) {
                         letter = this.letters[letter.letter];
                     }
@@ -82,6 +84,7 @@
                         this.letters[letter.letter] = letter;
                     }
                     for (var a in json.tree[l].artists) {
+                        // add artist in letter
                         var artist = new Artist_1.default(json.tree[l].artists[a]);
                         if (this.artists[artist.sortName]) {
                             artist = this.artists[artist.sortName];
@@ -93,6 +96,7 @@
                             this.totals.artists++;
                         }
                         for (var aa in json.tree[l].artists[a].albums) {
+                            // add albums in artist in letter
                             var album = new Album_1.default(json.tree[l].artists[a].albums[aa]);
                             if (this.albums[album.sortName]) {
                                 album = this.albums[album.sortName];
@@ -102,6 +106,15 @@
                                 artist.albums.push(album);
                                 this.albums[album.sortName] = album;
                                 this.totals.albums++;
+                            }
+                            for (var t in json.tree[l].artists[a].albums[aa].tracks) {
+                                var track = new Track_1.default(json.tree[l].artists[a].albums[aa].tracks[t]);
+                                this.tracks[track.id] = track;
+                                this.totals.tracks++;
+                                this.totals.playingTime += track.duration;
+                                track.artist = artist;
+                                track.album = album;
+                                album.tracks.push(track);
                             }
                         }
                     }

@@ -10,8 +10,8 @@
     var Artist = (function () {
         function Artist(json) {
             this.albums = [];
-            this.name = json.artist;
-            this.albumArtist = json.albumArtist;
+            this.name = json.name || json.artist;
+            this.albumArtist = json.albumartist || json.albumArtist;
             this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();
             this.bio = json.bio;
         }

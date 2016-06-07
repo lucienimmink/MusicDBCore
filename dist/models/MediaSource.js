@@ -9,7 +9,7 @@
     "use strict";
     var MediaSource = (function () {
         function MediaSource(json) {
-            this.url = json.file || json.url;
+            this.url = json.file || json.url || json.id;
         }
         return MediaSource;
     }());

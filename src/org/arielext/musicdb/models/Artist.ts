@@ -12,8 +12,8 @@ export default class Artist {
   sortName: string;
 
   constructor(json: any) {
-    this.name = json.artist;
-    this.albumArtist = json.albumArtist;
+    this.name = json.name || json.artist;
+    this.albumArtist = json.albumartist || json.albumArtist;
     this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();
     this.bio = json.bio;
   }

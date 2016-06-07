@@ -14,7 +14,7 @@ export default class Track {
 
   constructor(json: any) {
     this.id = json.id;
-    this.duration = json.duration;
+    this.duration = (json.seconds) ? json.seconds * 1000 : (json.duration && !isNaN(json.duration)) ? json.duration : 0;
     this.title = json.title;
     this.source = new MediaSource(json);
     this.disc = json.disc || this.guessBySource(json);

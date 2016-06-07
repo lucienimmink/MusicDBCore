@@ -52,6 +52,7 @@ export class musicdbcore {
         }
 
         let track = new Track(line);
+        this.tracks[track.id] = track;
         this.totals.tracks++;
         this.totals.playingTime += track.duration;
 
@@ -71,12 +72,14 @@ export class musicdbcore {
             // this json is build up as an object; with nested data
             for (let l in json.tree) {
                 let letter: Letter = new Letter(json.tree[l]);
+                // add letter
                 if (this.letters[letter.letter]) {
                     letter = this.letters[letter.letter];
                 } else {
                     this.letters[letter.letter] = letter;
                 }
                 for (let a in json.tree[l].artists) {
+                    // add artist in letter
                     let artist: Artist = new Artist(json.tree[l].artists[a]);
                     if (this.artists[artist.sortName]) {
                         artist = this.artists[artist.sortName];
@@ -87,6 +90,7 @@ export class musicdbcore {
                         this.totals.artists++;
                     }
                     for (let aa in json.tree[l].artists[a].albums) {
+                        // add albums in artist in letter
                         let album: Album = new Album(json.tree[l].artists[a].albums[aa]);
                         if (this.albums[album.sortName]) {
                             album = this.albums[album.sortName];
@@ -95,6 +99,17 @@ export class musicdbcore {
                             artist.albums.push(album);
                             this.albums[album.sortName] = album;
                             this.totals.albums++;
+                        }
+                        for (let t in json.tree[l].artists[a].albums[aa].tracks) {
+                            let track:Track = new Track(json.tree[l].artists[a].albums[aa].tracks[t]);
+                            this.tracks[track.id] = track;
+                            this.totals.tracks++;
+                            this.totals.playingTime += track.duration;
+
+                            track.artist = artist;
+                            track.album = album;
+
+                            album.tracks.push(track);
                         }
                     }
                 }
