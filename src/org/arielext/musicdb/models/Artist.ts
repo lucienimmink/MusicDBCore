@@ -18,6 +18,6 @@ export default class Artist {
     this.bio = json.bio;
   }
   url() {
-    return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.name)}/`;
+    return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.albumArtist || this.name)}/`;
   }
 }
