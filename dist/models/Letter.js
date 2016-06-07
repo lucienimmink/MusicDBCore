@@ -11,7 +11,7 @@
     var Letter = (function () {
         function Letter(json) {
             this.artists = [];
-            this.letter = this.getFirstLetterOf(json.albumArtist || json.artist);
+            this.letter = json.letter || this.getFirstLetterOf(json.albumArtist || json.artist);
             this.escapedLetter = encodeURIComponent(this.letter);
         }
         ;
