@@ -8,16 +8,26 @@ export default class Track {
   source: MediaSource;
   artist: Artist;
   album: Album;
+  trackArtist: string;
   duration: number;
   title: string;
   disc: number;
+  number: number;
+  isPlaying:boolean = false;
+  isPaused:boolean = false;
+  isLoved:boolean = false;
+  position:number = 0;
 
   constructor(json: any) {
-    this.id = json.id;
-    this.duration = (json.seconds) ? json.seconds * 1000 : (json.duration && !isNaN(json.duration)) ? json.duration : 0;
-    this.title = json.title;
-    this.source = new MediaSource(json);
-    this.disc = json.disc || this.guessBySource(json);
+    if (json.album && json.title) {
+      this.id = json.id;
+      this.duration = (json.seconds) ? json.seconds * 1000 : (json.duration && !isNaN(json.duration)) ? json.duration : 0;
+      this.title = json.title;
+      this.source = new MediaSource(json);
+      this.disc = json.disc || this.guessBySource(json);
+      this.number = json.number;
+      this.trackArtist = json.artist;
+    }
   }
 
   private guessBySource(json: any): number {
