@@ -2,6 +2,7 @@ import Artist from './models/Artist';
 import Album from './models/Album';
 import Track from './models/Track';
 import Letter from './models/Letter';
+import Year from './models/Year';
 import * as _ from "lodash";
 import { Subject }    from 'rxjs/Subject';
 
@@ -13,7 +14,9 @@ export class musicdbcore {
     public albums: INameToValueMap = {};
     public tracks: INameToValueMap = {};
     public letters: INameToValueMap = {};
+    public years: INameToValueMap = {};
     public sortedLetters: Array<Letter> = [];
+    public sortedAlbums: Array<Album> = [];
 
     private coreParsedSource = new Subject<any>();
     coreParsed$ = this.coreParsedSource.asObservable();
@@ -26,12 +29,14 @@ export class musicdbcore {
         parsingTime: 0
     }
 
+    private _latestAdditions: Array<Album> = [];
+
     constructor() {
         console.log(`Core init ${VERSION}`);
 
     }
 
-    private instanceIfPresent(core: any, key: string, map: INameToValueMap, obj: Object, excecuteIfNew: Function): any {
+    private instanceIfPresent(core: any, key: any, map: INameToValueMap, obj: Object, excecuteIfNew: Function): any {
         var ret: any = null;
         if (map[key]) {
             ret = map[key];
@@ -42,7 +47,6 @@ export class musicdbcore {
         }
         return ret;
     }
-
     private handleLetter(letter: Letter): Letter {
         return this.instanceIfPresent(this, letter.letter, this.letters, letter, function (core: any) { });
     }
@@ -58,7 +62,15 @@ export class musicdbcore {
             album.artist = artist;
             artist.albums.push(album);
             artist.sortAndReturnAlbumsBy('year', 'asc');
+            core.sortedAlbums.push(album);
             core.totals.albums++;
+            if (core.years[album.year]) {
+                core.years[album.year].albums.push(album);
+            } else {
+                let year = new Year(album);
+                year.albums.push(album);
+                core.years[year.year] = year;
+            }
         });
     }
     private handleTrack(artist: Artist, album: Album, track: Track): Track {
@@ -119,6 +131,7 @@ export class musicdbcore {
             track = this.handleTrack(artist, album, track);
         }
     };
+    
 
     private parseTree(tree: any): void {
         for (let l in tree) {
@@ -165,6 +178,9 @@ export class musicdbcore {
         // update parsing time
         this.totals.parsingTime += (new Date().getTime() - start);
         this.coreParsedSource.next(true);
+
+        // console.log(this.years);
+
     }
     getTrackByArtistAndName(artistName: string, trackName: string): Track {
         let artist = new Artist({ name: artistName, dummy: true });
@@ -180,6 +196,11 @@ export class musicdbcore {
             });
         }
         return ret;
+    }
+    getArtistByName(artistName:string): Artist {
+        let artist = new Artist({ name: artistName, dummy: true });
+        let coreArtist = this.artists[artist.sortName];
+        return coreArtist;
     }
     artistsList(): Array<Artist> {
         let c = this;
@@ -230,5 +251,22 @@ export class musicdbcore {
             }
         });
         return ret;
+    }
+    getLatestAdditions(amount:number = 10): Array<Album> {
+        let c = this;
+        if (this._latestAdditions.length !== 0) {
+            return this._latestAdditions;
+        }
+        this.sortedAlbums.sort((a,b) => {
+            if (a.modified > b.modified) {
+                return -1;
+            } else if (a.modified < b.modified) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        this._latestAdditions = this.sortedAlbums.splice(0, amount);
+        return this._latestAdditions;
     }
 }
