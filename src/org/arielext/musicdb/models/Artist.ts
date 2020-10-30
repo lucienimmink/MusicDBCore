@@ -1,62 +1,62 @@
-import Album from "./Album";
-import Letter from "./Letter";
+import Album from './Album';
+import Letter from './Letter';
 
 export default class Artist {
-  name: string;
-  bio: string;
-  art: string;
-  albums: Array<Album> = [];
-  letter: Letter;
-  albumArtist: string;
-  sortName: string;
-  isCollection: boolean;
+  public name: string;
+  public bio: string;
+  public art: string;
+  public albums: Album[] = [];
+  public letter: Letter;
+  public albumArtist: string;
+  public sortName: string;
+  public isCollection: boolean;
 
   constructor(json: any) {
     // a dummy artist is only used to search for a core artist but is not stored in the core.
     if ((json.album && json.title) || json.dummy) {
-      this.name = json.name || json.artist;
-      this.albumArtist = json.albumartist || json.albumArtist;
-      this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), 'the ');
+      this.name = json.name || json.artist || '';
+      this.albumArtist = json.albumartist || json.albumArtist || '';
+      // tslint:disable-next-line:max-line-length
+      this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), ['the ', '"', 'a ']);
       this.bio = json.bio;
-      this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false; // if albumartist doesn't exist it can't be a collection.
+      this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false;
     }
   }
 
-  private stripFromName(name: string, strip: string): string {
-    var s = strip.toUpperCase();
-    var f = name.toUpperCase();
-    f = _.trim(f);
-    if (_.startsWith(f, s)) {
-      f = f.substring(4);
-    }
-    return f;
-  }
-
-  url() {
+  public url() {
     return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.albumArtist || this.name)}/`;
   }
-  sortAlbumsBy(sortkey:string = 'name', direction:string = 'asc'):void {
-    this.albums.sort((a, b) => {
-      if (sortkey.indexOf('.') !== -1) {
-        let sorter = sortkey.split(".");
-          if (a[sorter[0]][sorter[1]] < b[sorter[0]][sorter[1]]) {
-          return (direction === 'asc') ? -1 : 1;
-        } else if (a[sorter[0]][sorter[1]] > b[sorter[0]][sorter[1]]) {
-          return (direction === 'asc') ? 1 : -1;
+  public sortAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): void {
+    const enCollator = new Intl.Collator('en');
+      this.albums.sort((a, b) => {
+        let aSorter;
+        let bSorter;
+        if (sortkey.indexOf(".") !== -1) {
+          const sorter = sortkey.split(".");
+          aSorter = a[sorter[0]][sorter[1]];
+          bSorter = b[sorter[0]][sorter[1]];
         } else {
-          return 0;
+          aSorter = sortkey !== 'year' ? a[sortkey].toUpperCase() : a[sortkey];
+          bSorter = sortkey !== 'year' ? b[sortkey].toUpperCase() : b[sortkey];
         }
-      }
-      if (a[sortkey] < b[sortkey]) {
-        return (direction === 'asc') ? -1 : 1;
-      } else if (a[sortkey] > b[sortkey]) {
-        return (direction === 'asc') ? 1 : -1;
-      }
-      return 0;
-    });
+        const output = enCollator.compare(aSorter, bSorter);
+        return direction === "asc" ? output : output * -1
+      });
   }
-  sortAndReturnAlbumsBy(sortkey:string = 'name', direction:string = 'asc'):Array<Album> {
+  public sortAndReturnAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): Album[] {
     this.sortAlbumsBy(sortkey, direction);
     return this.albums;
+  }
+
+  private stripFromName(name: string, strip: string[]): string {
+    let f = (name) ? name.toUpperCase() : '';
+    f = f.trim();
+    strip.forEach((str) => {
+      const s = str.toUpperCase();
+      if (f.indexOf(s) === 0) {
+        f = f.substring(s.length);
+      }
+    });
+    return f;
   }
 }
