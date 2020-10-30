@@ -9,8 +9,6 @@
     "rimraf": "^3.0.2",
     "typescript": "^3.4.3",
     "typings": "^2.1.1",
-    "diacritics-normalizr": "^1.0.3",
-    "fuse.js": "^6.4.2"
   },
   "peerDependencies": {
     "diacritics-normalizr": "^1.0.3",
