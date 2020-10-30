@@ -9,11 +9,11 @@ const VERSION = "1.6.1";
 
 // tslint:disable-next-line:class-name
 export class musicdbcore {
-  public artists: INameToValueMap = {};
-  public albums: INameToValueMap = {};
-  public tracks: INameToValueMap = {};
-  public letters: INameToValueMap = {};
-  public years: INameToValueMap = {};
+  public artists: any = {};
+  public albums: any = {};
+  public tracks: any = {};
+  public letters: any = {};
+  public years: any = {};
   public sortedLetters: Letter[] = [];
   public sortedAlbums: Album[] = [];
 
@@ -222,7 +222,7 @@ export class musicdbcore {
   private instanceIfPresent(
     core: any,
     key: any,
-    map: INameToValueMap,
+    map: any,
     obj: object,
     excecuteIfNew
   ): any {

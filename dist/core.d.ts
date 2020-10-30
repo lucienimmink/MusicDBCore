@@ -3,11 +3,11 @@ import Artist from "./models/Artist";
 import Letter from "./models/Letter";
 import Track from "./models/Track";
 export declare class musicdbcore {
-    artists: INameToValueMap;
-    albums: INameToValueMap;
-    tracks: INameToValueMap;
-    letters: INameToValueMap;
-    years: INameToValueMap;
+    artists: any;
+    albums: any;
+    tracks: any;
+    letters: any;
+    years: any;
     sortedLetters: Letter[];
     sortedAlbums: Album[];
     isCoreParsed: boolean;
