@@ -1,24 +1,23 @@
-(function (factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    var Album = (function () {
-        function Album(json) {
-            this.tracks = [];
+export default class Album {
+    constructor(json) {
+        this.tracks = [];
+        this.discs = [];
+        this.sortedDiscs = [];
+        this.modified = 0;
+        this.isContinues = true;
+        if (json.album && json.title) {
             this.name = json.album;
             this.sortName = this.name.toUpperCase();
             this.year = json.year;
+            this.modified = json.modified;
+            // strip month/day from universal date strings
+            if (this.year && this.year.indexOf('-') !== -1) {
+                this.year = this.year.split('-')[0];
+            }
         }
-        Album.prototype.url = function () {
-            return "/letter/" + this.artist.letter.escapedLetter + "/artist/" + encodeURIComponent(this.artist.name) + "/album/" + encodeURIComponent(this.name);
-        };
-        return Album;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = Album;
-});
+    }
+    url() {
+        // tslint:disable-next-line:max-line-length
+        return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.name)}`;
+    }
+}

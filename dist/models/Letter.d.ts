@@ -2,10 +2,13 @@ import Artist from "./Artist";
 export default class Letter {
     letter: string;
     escapedLetter: string;
-    artists: Array<Artist>;
+    artists: Artist[];
+    active: boolean;
     constructor(json: any);
     url(): string;
-    private getFirstLetterOf(name);
-    private stripFromName(name, strip);
-    private groupIfSpecialChar(c);
+    sortArtistsBy(sortkey?: string, direction?: string): void;
+    sortAndReturnArtistsBy(sortkey?: string, direction?: string): Artist[];
+    private getFirstLetterOf;
+    private stripFromName;
+    private groupIfSpecialChar;
 }

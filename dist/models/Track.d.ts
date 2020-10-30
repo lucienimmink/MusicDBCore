@@ -1,15 +1,28 @@
-import Artist from "./Artist";
 import Album from "./Album";
+import Artist from "./Artist";
 import MediaSource from "./MediaSource";
 export default class Track {
     id: string;
     source: MediaSource;
     artist: Artist;
     album: Album;
+    trackArtist: string;
     duration: number;
     title: string;
     disc: number;
+    number: number;
+    type: string;
+    isPlaying: boolean;
+    isPaused: boolean;
+    isLoved: boolean;
+    position: number;
+    buffered: any;
+    showActions: boolean;
+    date: Date;
+    nowPlaying: boolean;
+    image: string;
     constructor(json: any);
-    private guessBySource(json);
     url(): string;
+    toJSON(): string;
+    private guessBySource;
 }

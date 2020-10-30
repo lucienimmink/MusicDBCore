@@ -3,10 +3,11 @@
     "removeComments": false,
     "declaration": true,
     "noImplicitAny": false,
+    "moduleResolution": "node",
     "suppressExcessPropertyErrors": true,
-    "module": "umd",
     "noEmitHelpers": false,
-    "target": "es5",
+    "target": "es2018",
+    "module": "esnext",
     "outDir": "./dist"
   },
   "exclude": [

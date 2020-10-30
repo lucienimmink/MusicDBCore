@@ -1,4 +1,3 @@
-import { Subject } from "rxjs";
 import Album from "./models/Album";
 import Artist from "./models/Artist";
 import Letter from "./models/Letter";
@@ -19,8 +18,6 @@ export class musicdbcore {
   public sortedAlbums: Album[] = [];
 
   public isCoreParsed = false;
-  public coreParsedSource = new Subject<any>();
-  public coreParsed$ = this.coreParsedSource.asObservable();
 
   public totals: any = {
     artists: 0,
@@ -83,7 +80,6 @@ export class musicdbcore {
     this.sortedLetters = t;
     // update parsing time
     this.totals.parsingTime += new Date().getTime() - start;
-    this.coreParsedSource.next(true);
     this.isCoreParsed = true;
   }
   public getTrackByArtistAndName(artistName: string, trackName: string): Track {

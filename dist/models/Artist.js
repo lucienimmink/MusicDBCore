@@ -1,56 +1,50 @@
-(function (factory) {
-    if (typeof module === 'object' && typeof module.exports === 'object') {
-        var v = factory(require, exports); if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports"], factory);
-    }
-})(function (require, exports) {
-    "use strict";
-    var Artist = (function () {
-        function Artist(json) {
-            this.albums = [];
-            this.name = json.name || json.artist;
-            this.albumArtist = json.albumartist || json.albumArtist;
-            this.sortName = (this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase();
+export default class Artist {
+    constructor(json) {
+        this.albums = [];
+        // a dummy artist is only used to search for a core artist but is not stored in the core.
+        if ((json.album && json.title) || json.dummy) {
+            this.name = json.name || json.artist || '';
+            this.albumArtist = json.albumartist || json.albumArtist || '';
+            // tslint:disable-next-line:max-line-length
+            this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), ['the ', '"', 'a ']);
             this.bio = json.bio;
+            this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false;
         }
-        Artist.prototype.url = function () {
-            return "/letter/" + this.letter.escapedLetter + "/artist/" + encodeURIComponent(this.albumArtist || this.name) + "/";
-        };
-        Artist.prototype.sortAlbumsBy = function (sortkey, direction) {
-            if (sortkey === void 0) { sortkey = 'name'; }
-            if (direction === void 0) { direction = 'asc'; }
-            this.albums.sort(function (a, b) {
-                if (sortkey.indexOf('.') !== -1) {
-                    var sorter = sortkey.split(".");
-                    if (a[sorter[0]][sorter[1]] < b[sorter[0]][sorter[1]]) {
-                        return (direction === 'asc') ? -1 : 1;
-                    }
-                    else if (a[sorter[0]][sorter[1]] > b[sorter[0]][sorter[1]]) {
-                        return (direction === 'asc') ? 1 : -1;
-                    }
-                    else {
-                        return 0;
-                    }
-                }
-                if (a[sortkey] < b[sortkey]) {
-                    return (direction === 'asc') ? -1 : 1;
-                }
-                else if (a[sortkey] > b[sortkey]) {
-                    return (direction === 'asc') ? 1 : -1;
-                }
-                return 0;
-            });
-        };
-        Artist.prototype.sortAndReturnAlbumsBy = function (sortkey, direction) {
-            if (sortkey === void 0) { sortkey = 'name'; }
-            if (direction === void 0) { direction = 'asc'; }
-            this.sortAlbumsBy(sortkey, direction);
-            return this.albums;
-        };
-        return Artist;
-    }());
-    Object.defineProperty(exports, "__esModule", { value: true });
-    exports.default = Artist;
-});
+    }
+    url() {
+        return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.albumArtist || this.name)}/`;
+    }
+    sortAlbumsBy(sortkey = 'name', direction = 'asc') {
+        const enCollator = new Intl.Collator('en');
+        this.albums.sort((a, b) => {
+            let aSorter;
+            let bSorter;
+            if (sortkey.indexOf(".") !== -1) {
+                const sorter = sortkey.split(".");
+                aSorter = a[sorter[0]][sorter[1]];
+                bSorter = b[sorter[0]][sorter[1]];
+            }
+            else {
+                aSorter = sortkey !== 'year' ? a[sortkey].toUpperCase() : a[sortkey];
+                bSorter = sortkey !== 'year' ? b[sortkey].toUpperCase() : b[sortkey];
+            }
+            const output = enCollator.compare(aSorter, bSorter);
+            return direction === "asc" ? output : output * -1;
+        });
+    }
+    sortAndReturnAlbumsBy(sortkey = 'name', direction = 'asc') {
+        this.sortAlbumsBy(sortkey, direction);
+        return this.albums;
+    }
+    stripFromName(name, strip) {
+        let f = (name) ? name.toUpperCase() : '';
+        f = f.trim();
+        strip.forEach((str) => {
+            const s = str.toUpperCase();
+            if (f.indexOf(s) === 0) {
+                f = f.substring(s.length);
+            }
+        });
+        return f;
+    }
+}
