@@ -1,0 +1,17 @@
+import Album from './Album';
+import Letter from './Letter';
+export default class Artist {
+    name: string;
+    bio: string;
+    art: string;
+    albums: Album[];
+    letter: Letter;
+    albumArtist: string;
+    sortName: string;
+    isCollection: boolean;
+    constructor(json: any);
+    url(): string;
+    sortAlbumsBy(sortkey?: string, direction?: string): void;
+    sortAndReturnAlbumsBy(sortkey?: string, direction?: string): Album[];
+    private stripFromName;
+}
