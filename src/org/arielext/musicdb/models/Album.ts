@@ -19,7 +19,7 @@ export default class Album {
     if (json.album && json.title) {
       this.name = json.album;
       this.sortName = this.name.toUpperCase();
-      this.sortName = btoa(encodeURIComponent(this.sortName))
+      this.sortName = encodeURIComponent(this.sortName);
       this.year = json.year;
       this.modified = json.modified;
 
