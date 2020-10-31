@@ -18,6 +18,9 @@ export default class Letter {
         this.letter = "#";
       }
       this.escapedLetter = encodeURIComponent(this.letter);
+      if (this.letter === "#") {
+        this.escapedLetter = "_";
+      }
     }
   }
   public url() {

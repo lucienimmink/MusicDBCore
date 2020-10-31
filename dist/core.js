@@ -4,7 +4,7 @@ import Letter from "./models/Letter";
 import Search from "./models/Search";
 import Track from "./models/Track";
 import Year from "./models/Year";
-const VERSION = "1.6.1";
+const VERSION = "1.6.2";
 // tslint:disable-next-line:class-name
 export class musicdbcore {
     constructor() {
