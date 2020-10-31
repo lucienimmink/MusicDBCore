@@ -17,10 +17,7 @@ export default class Letter {
       if (this.letter === "1") {
         this.letter = "#";
       }
-      this.escapedLetter = encodeURIComponent(this.letter);
-      if (this.letter === "#") {
-        this.escapedLetter = "_";
-      }
+      this.escapedLetter = btoa(this.letter);
     }
   }
   public url() {

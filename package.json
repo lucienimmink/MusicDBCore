@@ -2,7 +2,7 @@
   "name": "musicdbcore",
   "version": "1.0.0",
   "description": "Core of MusicDB Next",
-  "main": "dist/core.js",
+  "main": "src/org/arielext.musicdb/core.ts",
   "devDependencies": {
     "rimraf": "^3.0.2",
     "typescript": "^3.4.3"
