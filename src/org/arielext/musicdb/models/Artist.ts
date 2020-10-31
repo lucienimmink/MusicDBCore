@@ -18,6 +18,7 @@ export default class Artist {
       this.albumArtist = json.albumartist || json.albumArtist || '';
       // tslint:disable-next-line:max-line-length
       this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), ['the ', '"', 'a ']);
+      this.sortName = this.sortName.replace(/ /g, ''); // remove spaces
       this.bio = json.bio;
       this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false;
     }
