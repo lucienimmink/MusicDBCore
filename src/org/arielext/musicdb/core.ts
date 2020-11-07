@@ -84,7 +84,7 @@ export class musicdbcore {
   }
   public getTrackByArtistAndName(artistName: string, trackName: string): Track {
     const artist: Artist = new Artist({ name: artistName, dummy: true });
-    const coreArtist: any = this.artists[artist.sortName];
+    const coreArtist: any = this.artists[artist.escapedName];
     let ret: Track = null;
     if (coreArtist) {
       coreArtist.albums.some(album => {
@@ -114,7 +114,7 @@ export class musicdbcore {
   }
   public getArtistByName(artistName: string): Artist {
     const artist: Artist = new Artist({ name: artistName, dummy: true });
-    const coreArtist: any = this.artists[artist.sortName];
+    const coreArtist: any = this.artists[artist.escapedName];
     return coreArtist;
   }
   public getAlbumByArtistAndName(artist: Artist, albumName: string): Album {
@@ -250,7 +250,7 @@ export class musicdbcore {
   private handleArtist(letter: Letter, artist: Artist): Artist {
     return this.instanceIfPresent(
       this,
-      artist.sortName,
+      artist.escapedName,
       this.artists,
       artist,
       (core: any): void => {
@@ -267,7 +267,7 @@ export class musicdbcore {
   ): Album {
     return this.instanceIfPresent(
       this,
-      artist.sortName + "|" + album.sortName,
+      artist.escapedName + "|" + album.escapedName,
       this.albums,
       album,
       (core: any): void => {

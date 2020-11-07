@@ -74,7 +74,7 @@ export class musicdbcore {
     }
     getTrackByArtistAndName(artistName, trackName) {
         const artist = new Artist({ name: artistName, dummy: true });
-        const coreArtist = this.artists[artist.sortName];
+        const coreArtist = this.artists[artist.escapedName];
         let ret = null;
         if (coreArtist) {
             coreArtist.albums.some(album => {
@@ -102,7 +102,7 @@ export class musicdbcore {
     }
     getArtistByName(artistName) {
         const artist = new Artist({ name: artistName, dummy: true });
-        const coreArtist = this.artists[artist.sortName];
+        const coreArtist = this.artists[artist.escapedName];
         return coreArtist;
     }
     getAlbumByArtistAndName(artist, albumName) {
@@ -222,14 +222,14 @@ export class musicdbcore {
         });
     }
     handleArtist(letter, artist) {
-        return this.instanceIfPresent(this, artist.sortName, this.artists, artist, (core) => {
+        return this.instanceIfPresent(this, artist.escapedName, this.artists, artist, (core) => {
             letter.artists.push(artist);
             artist.letter = letter;
             core.totals.artists++;
         });
     }
     handleAlbum(artist, album, isFlacSupported = true) {
-        return this.instanceIfPresent(this, artist.sortName + "|" + album.sortName, this.albums, album, (core) => {
+        return this.instanceIfPresent(this, artist.escapedName + "|" + album.escapedName, this.albums, album, (core) => {
             if ((album.type === "flac" && isFlacSupported) ||
                 album.type !== "flac") {
                 album.artist = artist;
