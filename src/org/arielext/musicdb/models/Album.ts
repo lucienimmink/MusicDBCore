@@ -5,6 +5,7 @@ export default class Album {
 
   public name: string;
   public sortName: string;
+  public escapedName: string;
   public artist: Artist;
   public tracks: Track[] = [];
   public discs: any[] = [];
@@ -19,7 +20,7 @@ export default class Album {
     if (json.album && json.title) {
       this.name = json.album;
       this.sortName = this.name.toUpperCase();
-      this.sortName = encodeURIComponent(this.sortName);
+      this.escapedName = encodeURIComponent(this.sortName);
       this.year = json.year;
       this.modified = json.modified;
 
@@ -31,6 +32,6 @@ export default class Album {
   }
   public url() {
     // tslint:disable-next-line:max-line-length
-    return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.name)}`;
+    return `/letter/${this.artist.letter.escapedLetter}/artist/${this.artist.escapedName}/album/${this.escapedName}`;
   }
 }

@@ -8,7 +8,7 @@ export default class Album {
         if (json.album && json.title) {
             this.name = json.album;
             this.sortName = this.name.toUpperCase();
-            this.sortName = encodeURIComponent(this.sortName);
+            this.escapedName = encodeURIComponent(this.sortName);
             this.year = json.year;
             this.modified = json.modified;
             // strip month/day from universal date strings
@@ -19,6 +19,6 @@ export default class Album {
     }
     url() {
         // tslint:disable-next-line:max-line-length
-        return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(this.name)}`;
+        return `/letter/${this.artist.letter.escapedLetter}/artist/${this.artist.escapedName}/album/${this.escapedName}`;
     }
 }

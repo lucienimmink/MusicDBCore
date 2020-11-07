@@ -7,13 +7,13 @@ export default class Artist {
             this.albumArtist = json.albumartist || json.albumArtist || '';
             // tslint:disable-next-line:max-line-length
             this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), ['the ', '"', 'a ']);
-            this.sortName = encodeURIComponent(this.sortName);
+            this.escapedName = encodeURIComponent(this.sortName);
             this.bio = json.bio;
             this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false;
         }
     }
     url() {
-        return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.sortName)}/`;
+        return `/letter/${this.letter.escapedLetter}/artist/${this.escapedName}/`;
     }
     sortAlbumsBy(sortkey = 'name', direction = 'asc') {
         const enCollator = new Intl.Collator('en');

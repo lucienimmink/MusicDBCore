@@ -3,6 +3,7 @@ import Track from './Track';
 export default class Album {
     name: string;
     sortName: string;
+    escapedName: string;
     artist: Artist;
     tracks: Track[];
     discs: any[];

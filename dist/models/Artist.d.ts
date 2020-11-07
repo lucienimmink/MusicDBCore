@@ -8,6 +8,7 @@ export default class Artist {
     letter: Letter;
     albumArtist: string;
     sortName: string;
+    escapedName: string;
     isCollection: boolean;
     constructor(json: any);
     url(): string;

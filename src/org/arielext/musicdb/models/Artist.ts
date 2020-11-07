@@ -9,6 +9,7 @@ export default class Artist {
   public letter: Letter;
   public albumArtist: string;
   public sortName: string;
+  public escapedName: string;
   public isCollection: boolean;
 
   constructor(json: any) {
@@ -18,14 +19,14 @@ export default class Artist {
       this.albumArtist = json.albumartist || json.albumArtist || '';
       // tslint:disable-next-line:max-line-length
       this.sortName = this.stripFromName((this.albumArtist) ? this.albumArtist.toUpperCase() : (json.sortName) ? json.sortName.toUpperCase() : this.name.toUpperCase(), ['the ', '"', 'a ']);
-      this.sortName = encodeURIComponent(this.sortName)
+      this.escapedName = encodeURIComponent(this.sortName)
       this.bio = json.bio;
       this.isCollection = (this.albumArtist) ? this.name !== this.albumArtist : false;
     }
   }
 
   public url() {
-    return `/letter/${this.letter.escapedLetter}/artist/${encodeURIComponent(this.sortName)}/`;
+    return `/letter/${this.letter.escapedLetter}/artist/${this.escapedName}/`;
   }
   public sortAlbumsBy(sortkey: string = 'name', direction: string = 'asc'): void {
     const enCollator = new Intl.Collator('en');
