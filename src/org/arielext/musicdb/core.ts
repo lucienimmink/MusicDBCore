@@ -5,7 +5,7 @@ import Search from "./models/Search";
 import Track from "./models/Track";
 import Year from "./models/Year";
 
-const VERSION = "1.6.3";
+const VERSION = "1.7.0";
 
 // tslint:disable-next-line:class-name
 export class musicdbcore {
@@ -56,6 +56,7 @@ export class musicdbcore {
   }
   public parseSourceJson(json: any, isFlacSupported: boolean = true): void {
     const start: number = new Date().getTime();
+    this.resetCollection();
     if (json.length) {
       // this json is flat; all lines in the json is 1 track
       for (const line of json) {
