@@ -24,7 +24,7 @@ export class musicdbcore {
     albums: 0,
     tracks: 0,
     playingTime: 0,
-    parsingTime: 0
+    parsingTime: 0,
   };
 
   private latestAdditions: Album[] = [];
@@ -49,7 +49,7 @@ export class musicdbcore {
       albums: 0,
       tracks: 0,
       playingTime: 0,
-      parsingTime: 0
+      parsingTime: 0,
     };
 
     this.latestAdditions = [];
@@ -88,8 +88,8 @@ export class musicdbcore {
     const coreArtist: any = this.artists[artist.escapedName];
     let ret: Track = null;
     if (coreArtist) {
-      coreArtist.albums.some(album => {
-        album.tracks.some(track => {
+      coreArtist.albums.some((album) => {
+        album.tracks.some((track) => {
           if (
             track.title &&
             track.title.toLowerCase() === trackName.toLowerCase()
@@ -106,7 +106,7 @@ export class musicdbcore {
   }
   public getTrackById(id: string): Track {
     let ret: Track = new Track({});
-    this.tracks.forEach(track => {
+    this.tracks.forEach((track) => {
       if (track.id === id) {
         ret = track;
       }
@@ -120,7 +120,7 @@ export class musicdbcore {
   }
   public getAlbumByArtistAndName(artist: Artist, albumName: string): Album {
     let ret: Album = null;
-    artist.albums.forEach(album => {
+    artist.albums.forEach((album) => {
       // console.info(album.name, albumName);
       if (album.name.toLowerCase() === albumName.toLowerCase()) {
         ret = album;
@@ -130,7 +130,7 @@ export class musicdbcore {
   }
   public getTrackByAlbumAndName(album: Album, trackName: string): Track {
     let ret: Track = null;
-    album.tracks.forEach(track => {
+    album.tracks.forEach((track) => {
       if (track.title.toLowerCase() === trackName.toLowerCase()) {
         ret = track;
       }
@@ -171,7 +171,7 @@ export class musicdbcore {
     return this.search.doSearch({
       query,
       keys: ["title"],
-      list: this.trackList()
+      list: this.trackList(),
     });
   }
   public getLatestAdditions(amount: number = 14): Album[] {

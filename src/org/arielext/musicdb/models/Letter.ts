@@ -37,7 +37,7 @@ export default class Letter {
         return 0;
       });
     } else {
-      const enCollator = new Intl.Collator('en');
+      const enCollator = new Intl.Collator("en");
       this.artists.sort((a, b) => {
         let aSorter;
         let bSorter;
@@ -50,7 +50,7 @@ export default class Letter {
           bSorter = b[sortkey].toUpperCase();
         }
         const output = enCollator.compare(aSorter, bSorter);
-        return direction === "asc" ? output : output * -1
+        return direction === "asc" ? output : output * -1;
       });
     }
   }
@@ -70,7 +70,7 @@ export default class Letter {
   private stripFromName(name: string, strip: string[]): string {
     let f = name ? name.toUpperCase() : "";
     f = f.trim();
-    strip.forEach(str => {
+    strip.forEach((str) => {
       const s = str.toUpperCase();
       if (f.indexOf(s) === 0) {
         f = f.substring(s.length);
@@ -99,7 +99,7 @@ export default class Letter {
         "}",
         "_",
         "-",
-        "."
+        ".",
       ].indexOf(c) !== -1
     ) {
       return "#";

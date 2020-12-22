@@ -1,8 +1,7 @@
-import Artist from './Artist';
-import Track from './Track';
+import Artist from "./Artist";
+import Track from "./Track";
 
 export default class Album {
-
   public name: string;
   public sortName: string;
   public escapedName: string;
@@ -16,7 +15,7 @@ export default class Album {
   public type: string;
   public isContinues = true;
 
-  constructor (json: any) {
+  constructor(json: any) {
     if (json.album && json.title) {
       this.name = json.album;
       this.sortName = this.name.toUpperCase();
@@ -25,8 +24,8 @@ export default class Album {
       this.modified = json.modified;
 
       // strip month/day from universal date strings
-      if (this.year && this.year.indexOf('-') !== -1) {
-        this.year = this.year.split('-')[0];
+      if (this.year && this.year.indexOf("-") !== -1) {
+        this.year = this.year.split("-")[0];
       }
     }
   }

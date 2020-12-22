@@ -19,7 +19,7 @@ export default class Track {
   public position = 0;
   public buffered: any = {
     start: 0,
-    end: 0
+    end: 0,
   };
   public showActions = false;
   public date: Date;
@@ -29,7 +29,11 @@ export default class Track {
   constructor(json: any) {
     if (json.album && json.title) {
       this.id = json.id;
-      this.duration = json.seconds ? json.seconds * 1000 : json.duration && !isNaN(json.duration) ? json.duration : 0;
+      this.duration = json.seconds
+        ? json.seconds * 1000
+        : json.duration && !isNaN(json.duration)
+        ? json.duration
+        : 0;
       this.title = json.title;
       this.source = new MediaSource(json);
       this.disc = json.disc || this.guessBySource(json);
@@ -41,7 +45,9 @@ export default class Track {
 
   public url() {
     // tslint:disable-next-line:max-line-length
-    return `/letter/${this.artist.letter.escapedLetter}/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(
+    return `/letter/${
+      this.artist.letter.escapedLetter
+    }/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(
       this.album.name
     )}/track/${encodeURIComponent(this.title)}`;
   }
