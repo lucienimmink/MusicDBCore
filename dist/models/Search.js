@@ -6,7 +6,7 @@ export default class Search {
             const fused = fuse.search(query);
             return fused.map(({ item }) => item);
         };
-        this.options = keys => {
+        this.options = (keys) => {
             return {
                 keys,
                 threshold: 0.25,

@@ -21,7 +21,7 @@ export class musicdbcore {
             albums: 0,
             tracks: 0,
             playingTime: 0,
-            parsingTime: 0
+            parsingTime: 0,
         };
         this.latestAdditions = [];
         this.search = new Search();
@@ -41,7 +41,7 @@ export class musicdbcore {
             albums: 0,
             tracks: 0,
             playingTime: 0,
-            parsingTime: 0
+            parsingTime: 0,
         };
         this.latestAdditions = [];
     }
@@ -78,8 +78,8 @@ export class musicdbcore {
         const coreArtist = this.artists[artist.escapedName];
         let ret = null;
         if (coreArtist) {
-            coreArtist.albums.some(album => {
-                album.tracks.some(track => {
+            coreArtist.albums.some((album) => {
+                album.tracks.some((track) => {
                     if (track.title &&
                         track.title.toLowerCase() === trackName.toLowerCase()) {
                         if (!ret) {
@@ -94,7 +94,7 @@ export class musicdbcore {
     }
     getTrackById(id) {
         let ret = new Track({});
-        this.tracks.forEach(track => {
+        this.tracks.forEach((track) => {
             if (track.id === id) {
                 ret = track;
             }
@@ -108,7 +108,7 @@ export class musicdbcore {
     }
     getAlbumByArtistAndName(artist, albumName) {
         let ret = null;
-        artist.albums.forEach(album => {
+        artist.albums.forEach((album) => {
             // console.info(album.name, albumName);
             if (album.name.toLowerCase() === albumName.toLowerCase()) {
                 ret = album;
@@ -118,7 +118,7 @@ export class musicdbcore {
     }
     getTrackByAlbumAndName(album, trackName) {
         let ret = null;
-        album.tracks.forEach(track => {
+        album.tracks.forEach((track) => {
             if (track.title.toLowerCase() === trackName.toLowerCase()) {
                 ret = track;
             }
@@ -155,7 +155,7 @@ export class musicdbcore {
         return this.search.doSearch({
             query,
             keys: ["title"],
-            list: this.trackList()
+            list: this.trackList(),
         });
     }
     getLatestAdditions(amount = 14) {

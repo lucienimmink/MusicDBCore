@@ -1,5 +1,5 @@
-import Album from './Album';
-import Letter from './Letter';
+import Album from "./Album";
+import Letter from "./Letter";
 export default class Artist {
     name: string;
     bio: string;

@@ -7,13 +7,17 @@ export default class Track {
         this.position = 0;
         this.buffered = {
             start: 0,
-            end: 0
+            end: 0,
         };
         this.showActions = false;
         this.image = "";
         if (json.album && json.title) {
             this.id = json.id;
-            this.duration = json.seconds ? json.seconds * 1000 : json.duration && !isNaN(json.duration) ? json.duration : 0;
+            this.duration = json.seconds
+                ? json.seconds * 1000
+                : json.duration && !isNaN(json.duration)
+                    ? json.duration
+                    : 0;
             this.title = json.title;
             this.source = new MediaSource(json);
             this.disc = json.disc || this.guessBySource(json);

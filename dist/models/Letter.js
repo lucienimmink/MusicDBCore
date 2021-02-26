@@ -29,7 +29,7 @@ export default class Letter {
             });
         }
         else {
-            const enCollator = new Intl.Collator('en');
+            const enCollator = new Intl.Collator("en");
             this.artists.sort((a, b) => {
                 let aSorter;
                 let bSorter;
@@ -60,7 +60,7 @@ export default class Letter {
     stripFromName(name, strip) {
         let f = name ? name.toUpperCase() : "";
         f = f.trim();
-        strip.forEach(str => {
+        strip.forEach((str) => {
             const s = str.toUpperCase();
             if (f.indexOf(s) === 0) {
                 f = f.substring(s.length);
@@ -88,7 +88,7 @@ export default class Letter {
             "}",
             "_",
             "-",
-            "."
+            ".",
         ].indexOf(c) !== -1) {
             return "#";
         }
