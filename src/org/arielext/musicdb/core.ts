@@ -5,7 +5,7 @@ import Search from "./models/Search";
 import Track from "./models/Track";
 import Year from "./models/Year";
 
-const VERSION = "1.7.0";
+const VERSION = "1.7.1";
 
 // tslint:disable-next-line:class-name
 export class musicdbcore {
@@ -192,7 +192,7 @@ export class musicdbcore {
   }
   public getNextAlbum(album: Album): Album {
     const artist: Artist = album.artist;
-    const albumIndex: number = artist.albums.indexOf(album);
+    const albumIndex = this.getIndex(artist.albums, album);
     let nextAlbum: Album = artist.albums[albumIndex + 1];
     if (!nextAlbum) {
       // get next artist
@@ -203,7 +203,7 @@ export class musicdbcore {
   }
   public getNextArtist(artist: Artist): Artist {
     const letter: Letter = artist.letter;
-    const artistIndex: number = letter.artists.indexOf(artist);
+    const artistIndex = this.getIndex(letter.artists, artist);
     let nextArtist: Artist = letter.artists[artistIndex + 1];
     if (!nextArtist) {
       const nextLetter: Letter = this.getNextLetter(letter);
@@ -212,12 +212,27 @@ export class musicdbcore {
     return nextArtist;
   }
   public getNextLetter(letter: Letter): Letter {
-    const letterIndex: number = this.sortedLetters.indexOf(letter);
+    const letterIndex = this.getIndex(this.sortedLetters, letter);
     let nextLetter: Letter = this.sortedLetters[letterIndex + 1];
     if (!nextLetter) {
       nextLetter = this.sortedLetters[0];
     }
     return nextLetter;
+  }
+  private getIndex(collection: any, instance: any) {
+    let i = -1;
+    collection.forEach((ins: any, index: number) => {
+      if (ins.escapedName) {
+        if (ins.escapedName === instance.escapedName) {
+          i = index;
+        }
+      } else if (ins.escapedLetter) {
+        if (ins.escapedLetter === instance.escapedLetter) {
+          i = index;
+        }
+      }
+    });
+    return i;
   }
 
   private instanceIfPresent(

@@ -31,6 +31,7 @@ export declare class musicdbcore {
     getNextAlbum(album: Album): Album;
     getNextArtist(artist: Artist): Artist;
     getNextLetter(letter: Letter): Letter;
+    private getIndex;
     private instanceIfPresent;
     private handleLetter;
     private handleArtist;

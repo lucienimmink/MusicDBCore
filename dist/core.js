@@ -4,7 +4,7 @@ import Letter from "./models/Letter";
 import Search from "./models/Search";
 import Track from "./models/Track";
 import Year from "./models/Year";
-const VERSION = "1.7.0";
+const VERSION = "1.7.1";
 // tslint:disable-next-line:class-name
 export class musicdbcore {
     constructor() {
@@ -178,7 +178,7 @@ export class musicdbcore {
     }
     getNextAlbum(album) {
         const artist = album.artist;
-        const albumIndex = artist.albums.indexOf(album);
+        const albumIndex = this.getIndex(artist.albums, album);
         let nextAlbum = artist.albums[albumIndex + 1];
         if (!nextAlbum) {
             // get next artist
@@ -189,7 +189,7 @@ export class musicdbcore {
     }
     getNextArtist(artist) {
         const letter = artist.letter;
-        const artistIndex = letter.artists.indexOf(artist);
+        const artistIndex = this.getIndex(letter.artists, artist);
         let nextArtist = letter.artists[artistIndex + 1];
         if (!nextArtist) {
             const nextLetter = this.getNextLetter(letter);
@@ -198,12 +198,28 @@ export class musicdbcore {
         return nextArtist;
     }
     getNextLetter(letter) {
-        const letterIndex = this.sortedLetters.indexOf(letter);
+        const letterIndex = this.getIndex(this.sortedLetters, letter);
         let nextLetter = this.sortedLetters[letterIndex + 1];
         if (!nextLetter) {
             nextLetter = this.sortedLetters[0];
         }
         return nextLetter;
+    }
+    getIndex(collection, instance) {
+        let i = -1;
+        collection.forEach((ins, index) => {
+            if (ins.escapedName) {
+                if (ins.escapedName === instance.escapedName) {
+                    i = index;
+                }
+            }
+            else if (ins.escapedLetter) {
+                if (ins.escapedLetter === instance.escapedLetter) {
+                    i = index;
+                }
+            }
+        });
+        return i;
     }
     instanceIfPresent(core, key, map, obj, excecuteIfNew) {
         let ret = null;
