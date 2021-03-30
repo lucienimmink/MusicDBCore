@@ -25,6 +25,7 @@ export default class Track {
   public date: Date;
   public nowPlaying: boolean;
   public image: string = "";
+  public trackGain: number;
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -40,6 +41,7 @@ export default class Track {
       this.number = json.number;
       this.trackArtist = json.artist;
       this.type = json.type || "mp3";
+      this.trackGain = json.trackgain || 0;
     }
   }
 

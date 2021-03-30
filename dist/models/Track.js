@@ -24,6 +24,7 @@ export default class Track {
             this.number = json.number;
             this.trackArtist = json.artist;
             this.type = json.type || "mp3";
+            this.trackGain = json.trackgain || 0;
         }
     }
     url() {

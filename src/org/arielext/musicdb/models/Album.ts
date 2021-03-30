@@ -14,6 +14,7 @@ export default class Album {
   public modified = 0;
   public type: string;
   public isContinues = true;
+  public albumGain: number;
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -22,6 +23,7 @@ export default class Album {
       this.escapedName = encodeURIComponent(this.sortName);
       this.year = json.year;
       this.modified = json.modified;
+      this.albumGain = json.albumgain || 0;
 
       // strip month/day from universal date strings
       if (this.year && this.year.indexOf("-") !== -1) {

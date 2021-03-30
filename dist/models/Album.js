@@ -11,6 +11,7 @@ export default class Album {
             this.escapedName = encodeURIComponent(this.sortName);
             this.year = json.year;
             this.modified = json.modified;
+            this.albumGain = json.albumgain || 0;
             // strip month/day from universal date strings
             if (this.year && this.year.indexOf("-") !== -1) {
                 this.year = this.year.split("-")[0];

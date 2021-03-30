@@ -13,6 +13,7 @@ export default class Album {
     modified: number;
     type: string;
     isContinues: boolean;
+    albumGain: number;
     constructor(json: any);
     url(): string;
 }

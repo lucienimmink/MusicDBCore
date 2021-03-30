@@ -21,6 +21,7 @@ export default class Track {
     date: Date;
     nowPlaying: boolean;
     image: string;
+    trackGain: number;
     constructor(json: any);
     url(): string;
     toJSON(): string;
