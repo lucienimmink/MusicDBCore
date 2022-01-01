@@ -15,7 +15,7 @@ export default class Artist {
   constructor(json: any) {
     // a dummy artist is only used to search for a core artist but is not stored in the core.
     if ((json.album && json.title) || json.dummy) {
-      this.name = json.name || json.artist || "";
+      this.name = json.name || json.artist || json.albumartist || "";
       this.albumArtist = json.albumartist || json.albumArtist || "";
       // tslint:disable-next-line:max-line-length
       this.sortName = this.stripFromName(
