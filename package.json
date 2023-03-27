@@ -1,6 +1,6 @@
 {
   "name": "@addasoft/musicdbcore",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Core of MusicDB Next",
   "main": "dist/core.js",
   "devDependencies": {
