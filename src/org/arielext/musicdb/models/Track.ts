@@ -3,16 +3,16 @@ import Artist from "./Artist";
 import MediaSource from "./MediaSource";
 
 export default class Track {
-  public id: string;
-  public source: MediaSource;
-  public artist: Artist;
-  public album: Album;
-  public trackArtist: string;
-  public duration: number;
-  public title: string;
-  public disc: number;
-  public number: number;
-  public type: string;
+  public id: string = "";
+  public source: MediaSource | null = null;
+  public artist: Artist | null = null;
+  public album: Album | null = null;
+  public trackArtist: string = "";
+  public duration: number = 0;
+  public title: string = "";
+  public disc: number = 0;
+  public number: number = 0;
+  public type: string = "";
   public isPlaying = false;
   public isPaused = false;
   public isLoved = false;
@@ -22,10 +22,10 @@ export default class Track {
     end: 0,
   };
   public showActions = false;
-  public date: Date;
-  public nowPlaying: boolean;
+  public date: Date | null = null;
+  public nowPlaying: boolean = false;
   public image: string = "";
-  public trackGain: number;
+  public trackGain: number = 0;
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -48,9 +48,11 @@ export default class Track {
   public url() {
     // tslint:disable-next-line:max-line-length
     return `/letter/${
-      this.artist.letter.escapedLetter
-    }/artist/${encodeURIComponent(this.artist.name)}/album/${encodeURIComponent(
-      this.album.name
+      this?.artist?.letter?.escapedLetter
+    }/artist/${encodeURIComponent(
+      this.artist?.name || ""
+    )}/album/${encodeURIComponent(
+      this.album?.name || ""
     )}/track/${encodeURIComponent(this.title)}`;
   }
 
@@ -59,15 +61,15 @@ export default class Track {
   }
 
   private guessBySource(json: any): number {
-    const guessable = this.source.url;
+    const guessable = this.source?.url;
     const discs: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     for (const i of discs) {
       // tslint:disable-next-line:max-line-length
       if (
-        guessable.indexOf(` - ${i}.`) !== -1 ||
-        guessable.indexOf(`(${i}) - `) !== -1 ||
-        guessable.indexOf(`CD${i}`) !== -1 ||
-        guessable.indexOf(`\\${i}-`) !== -1
+        guessable?.indexOf(` - ${i}.`) !== -1 ||
+        guessable?.indexOf(`(${i}) - `) !== -1 ||
+        guessable?.indexOf(`CD${i}`) !== -1 ||
+        guessable?.indexOf(`\\${i}-`) !== -1
       ) {
         return i;
       }

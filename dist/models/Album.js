@@ -1,10 +1,18 @@
 export default class Album {
+    name = "";
+    sortName = "";
+    escapedName = "";
+    artist = null;
+    tracks = [];
+    discs = [];
+    sortedDiscs = [];
+    year;
+    art = "";
+    modified = 0;
+    type = "";
+    isContinues = true;
+    albumGain = 0;
     constructor(json) {
-        this.tracks = [];
-        this.discs = [];
-        this.sortedDiscs = [];
-        this.modified = 0;
-        this.isContinues = true;
         if (json.album && json.title) {
             this.name = json.album;
             this.sortName = this.name.toUpperCase();
@@ -19,7 +27,6 @@ export default class Album {
         }
     }
     url() {
-        // tslint:disable-next-line:max-line-length
-        return `/letter/${this.artist.letter.escapedLetter}/artist/${this.artist.escapedName}/album/${this.escapedName}`;
+        return `/letter/${this.artist?.letter?.escapedLetter}/artist/${this.artist?.escapedName}/album/${this.escapedName}`;
     }
 }

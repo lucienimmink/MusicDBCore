@@ -5,7 +5,7 @@ export default class Artist {
     bio: string;
     art: string;
     albums: Album[];
-    letter: Letter;
+    letter: Letter | null;
     albumArtist: string;
     sortName: string;
     escapedName: string;

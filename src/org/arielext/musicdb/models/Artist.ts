@@ -2,15 +2,15 @@ import Album from "./Album";
 import Letter from "./Letter";
 
 export default class Artist {
-  public name: string;
-  public bio: string;
-  public art: string;
+  public name: string = "";
+  public bio: string = "";
+  public art: string = "";
   public albums: Album[] = [];
-  public letter: Letter;
-  public albumArtist: string;
-  public sortName: string;
-  public escapedName: string;
-  public isCollection: boolean;
+  public letter: Letter | null = null;
+  public albumArtist: string = "";
+  public sortName: string = "";
+  public escapedName: string = "";
+  public isCollection: boolean = false;
 
   constructor(json: any) {
     // a dummy artist is only used to search for a core artist but is not stored in the core.
@@ -35,7 +35,7 @@ export default class Artist {
   }
 
   public url() {
-    return `/letter/${this.letter.escapedLetter}/artist/${this.escapedName}/`;
+    return `/letter/${this.letter?.escapedLetter}/artist/${this.escapedName}/`;
   }
   public sortAlbumsBy(
     sortkey: string = "name",

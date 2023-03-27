@@ -4,7 +4,7 @@ export default class Album {
     name: string;
     sortName: string;
     escapedName: string;
-    artist: Artist;
+    artist: Artist | null;
     tracks: Track[];
     discs: any[];
     sortedDiscs: any[];

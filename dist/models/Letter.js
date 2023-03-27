@@ -1,8 +1,10 @@
 import { normalizeSync } from "diacritics-normalizr";
 export default class Letter {
+    letter = "";
+    escapedLetter = "";
+    artists = [];
+    active = false;
     constructor(json) {
-        this.artists = [];
-        this.active = false;
         if (json.album && json.title) {
             this.letter =
                 json.letter ||

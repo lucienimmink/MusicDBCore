@@ -2,19 +2,19 @@ import Artist from "./Artist";
 import Track from "./Track";
 
 export default class Album {
-  public name: string;
-  public sortName: string;
-  public escapedName: string;
-  public artist: Artist;
+  public name: string = "";
+  public sortName: string = "";
+  public escapedName: string = "";
+  public artist: Artist | null = null;
   public tracks: Track[] = [];
   public discs: any[] = [];
   public sortedDiscs: any[] = [];
   public year: any;
-  public art: string;
+  public art: string = "";
   public modified = 0;
-  public type: string;
+  public type: string = "";
   public isContinues = true;
-  public albumGain: number;
+  public albumGain: number = 0;
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -32,7 +32,6 @@ export default class Album {
     }
   }
   public url() {
-    // tslint:disable-next-line:max-line-length
-    return `/letter/${this.artist.letter.escapedLetter}/artist/${this.artist.escapedName}/album/${this.escapedName}`;
+    return `/letter/${this.artist?.letter?.escapedLetter}/artist/${this.artist?.escapedName}/album/${this.escapedName}`;
   }
 }

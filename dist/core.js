@@ -7,24 +7,24 @@ import Year from "./models/Year";
 const VERSION = "1.8.1";
 // tslint:disable-next-line:class-name
 export class musicdbcore {
+    artists = {};
+    albums = {};
+    tracks = {};
+    letters = {};
+    years = {};
+    sortedLetters = [];
+    sortedAlbums = [];
+    isCoreParsed = false;
+    totals = {
+        artists: 0,
+        albums: 0,
+        tracks: 0,
+        playingTime: 0,
+        parsingTime: 0,
+    };
+    latestAdditions = [];
+    search = new Search();
     constructor() {
-        this.artists = {};
-        this.albums = {};
-        this.tracks = {};
-        this.letters = {};
-        this.years = {};
-        this.sortedLetters = [];
-        this.sortedAlbums = [];
-        this.isCoreParsed = false;
-        this.totals = {
-            artists: 0,
-            albums: 0,
-            tracks: 0,
-            playingTime: 0,
-            parsingTime: 0,
-        };
-        this.latestAdditions = [];
-        this.search = new Search();
         // tslint:disable-next-line:no-console
         console.info(`Core init ${VERSION}`);
     }
@@ -76,7 +76,7 @@ export class musicdbcore {
     getTrackByArtistAndName(artistName, trackName) {
         const artist = new Artist({ name: artistName, dummy: true });
         const coreArtist = this.artists[artist.escapedName];
-        let ret = null;
+        let ret = new Track({});
         if (coreArtist) {
             coreArtist.albums.some((album) => {
                 album.tracks.some((track) => {
@@ -107,7 +107,7 @@ export class musicdbcore {
         return coreArtist;
     }
     getAlbumByArtistAndName(artist, albumName) {
-        let ret = null;
+        let ret = new Album({});
         artist.albums.forEach((album) => {
             // console.info(album.name, albumName);
             if (album.name.toLowerCase() === albumName.toLowerCase()) {
@@ -117,7 +117,7 @@ export class musicdbcore {
         return ret;
     }
     getTrackByAlbumAndName(album, trackName) {
-        let ret = null;
+        let ret = new Track({});
         album.tracks.forEach((track) => {
             if (track.title.toLowerCase() === trackName.toLowerCase()) {
                 ret = track;
@@ -177,6 +177,7 @@ export class musicdbcore {
         return this.latestAdditions;
     }
     getNextAlbum(album) {
+        // @ts-ignore
         const artist = album.artist;
         const albumIndex = this.getIndex(artist.albums, album);
         let nextAlbum = artist.albums[albumIndex + 1];
@@ -188,6 +189,7 @@ export class musicdbcore {
         return nextAlbum;
     }
     getNextArtist(artist) {
+        // @ts-ignore
         const letter = artist.letter;
         const artistIndex = this.getIndex(letter.artists, artist);
         let nextArtist = letter.artists[artistIndex + 1];

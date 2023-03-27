@@ -86,7 +86,7 @@ export class musicdbcore {
   public getTrackByArtistAndName(artistName: string, trackName: string): Track {
     const artist: Artist = new Artist({ name: artistName, dummy: true });
     const coreArtist: any = this.artists[artist.escapedName];
-    let ret: Track = null;
+    let ret: Track = new Track({});
     if (coreArtist) {
       coreArtist.albums.some((album) => {
         album.tracks.some((track) => {
@@ -119,7 +119,7 @@ export class musicdbcore {
     return coreArtist;
   }
   public getAlbumByArtistAndName(artist: Artist, albumName: string): Album {
-    let ret: Album = null;
+    let ret: Album = new Album({});
     artist.albums.forEach((album) => {
       // console.info(album.name, albumName);
       if (album.name.toLowerCase() === albumName.toLowerCase()) {
@@ -129,7 +129,7 @@ export class musicdbcore {
     return ret;
   }
   public getTrackByAlbumAndName(album: Album, trackName: string): Track {
-    let ret: Track = null;
+    let ret: Track = new Track({});
     album.tracks.forEach((track) => {
       if (track.title.toLowerCase() === trackName.toLowerCase()) {
         ret = track;
@@ -191,6 +191,7 @@ export class musicdbcore {
     return this.latestAdditions;
   }
   public getNextAlbum(album: Album): Album {
+    // @ts-ignore
     const artist: Artist = album.artist;
     const albumIndex = this.getIndex(artist.albums, album);
     let nextAlbum: Album = artist.albums[albumIndex + 1];
@@ -202,6 +203,7 @@ export class musicdbcore {
     return nextAlbum;
   }
   public getNextArtist(artist: Artist): Artist {
+    // @ts-ignore
     const letter: Letter = artist.letter;
     const artistIndex = this.getIndex(letter.artists, artist);
     let nextArtist: Artist = letter.artists[artistIndex + 1];

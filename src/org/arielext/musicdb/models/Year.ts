@@ -1,7 +1,7 @@
 import Album from "./Album";
 
 export default class Year {
-  public year: number;
+  public year: number = 0;
   public albums: Album[] = [];
 
   constructor(album: Album) {

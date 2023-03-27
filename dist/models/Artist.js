@@ -1,6 +1,14 @@
 export default class Artist {
+    name = "";
+    bio = "";
+    art = "";
+    albums = [];
+    letter = null;
+    albumArtist = "";
+    sortName = "";
+    escapedName = "";
+    isCollection = false;
     constructor(json) {
-        this.albums = [];
         // a dummy artist is only used to search for a core artist but is not stored in the core.
         if ((json.album && json.title) || json.dummy) {
             this.name = json.name || json.artist || json.albumartist || "";
@@ -19,7 +27,7 @@ export default class Artist {
         }
     }
     url() {
-        return `/letter/${this.letter.escapedLetter}/artist/${this.escapedName}/`;
+        return `/letter/${this.letter?.escapedLetter}/artist/${this.escapedName}/`;
     }
     sortAlbumsBy(sortkey = "name", direction = "asc") {
         const enCollator = new Intl.Collator("en");

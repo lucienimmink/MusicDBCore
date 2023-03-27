@@ -3,9 +3,9 @@ import Artist from "./Artist";
 import MediaSource from "./MediaSource";
 export default class Track {
     id: string;
-    source: MediaSource;
-    artist: Artist;
-    album: Album;
+    source: MediaSource | null;
+    artist: Artist | null;
+    album: Album | null;
     trackArtist: string;
     duration: number;
     title: string;
@@ -18,7 +18,7 @@ export default class Track {
     position: number;
     buffered: any;
     showActions: boolean;
-    date: Date;
+    date: Date | null;
     nowPlaying: boolean;
     image: string;
     trackGain: number;

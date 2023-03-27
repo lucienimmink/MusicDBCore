@@ -2,8 +2,8 @@ import { normalizeSync } from "diacritics-normalizr";
 import Artist from "./Artist";
 
 export default class Letter {
-  public letter: string;
-  public escapedLetter: string;
+  public letter: string = "";
+  public escapedLetter: string = "";
   public artists: Artist[] = [];
   public active = false;
 
