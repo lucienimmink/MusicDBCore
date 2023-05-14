@@ -82,9 +82,7 @@ export class musicdbcore {
                 album.tracks.some((track) => {
                     if (track.title &&
                         track.title.toLowerCase() === trackName.toLowerCase()) {
-                        if (!ret) {
-                            ret = track;
-                        }
+                        ret = track;
                         return true; // break out of the some itterator
                     }
                 });
