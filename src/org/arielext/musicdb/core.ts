@@ -94,9 +94,7 @@ export class musicdbcore {
             track.title &&
             track.title.toLowerCase() === trackName.toLowerCase()
           ) {
-            if (!ret) {
-              ret = track;
-            }
+            ret = track;
             return true; // break out of the some itterator
           }
         });
