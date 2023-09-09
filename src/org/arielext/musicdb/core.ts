@@ -170,7 +170,6 @@ export class musicdbcore {
       query,
       keys: ["title"],
       list: this.trackList(),
-      fuziness: 0.5,
     });
   }
   public searchTrackByArtistAndTrack(artist: string, title: string): any {
@@ -180,7 +179,8 @@ export class musicdbcore {
         { name: 'title', getFn: (track) => track.title },
         { name: 'artist', getFn: (track) => track.albumArtist },
       ],
-      list: this.trackList()
+      list: this.trackList(),
+      fuziness: 0.5,
     });
   }
   public getLatestAdditions(amount: number = 14): Album[] {
