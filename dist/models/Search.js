@@ -1,14 +1,14 @@
 import Fuse from "fuse.js";
 export default class Search {
-    doSearch = ({ query, keys = ["name"], list }) => {
-        const fuse = new Fuse(list, this.options(keys));
+    doSearch = ({ query, keys, list, fuziness = 0.25 }) => {
+        const fuse = new Fuse(list, this.options(keys, fuziness));
         const fused = fuse.search(query);
         return fused.map(({ item }) => item);
     };
-    options = (keys) => {
+    options = (keys, fuziness) => {
         return {
             keys,
-            threshold: 0.25,
+            threshold: fuziness,
             shouldSort: true,
         };
     };

@@ -144,16 +144,27 @@ export class musicdbcore {
         return ret;
     }
     searchArtist(query) {
-        return this.search.doSearch({ query, list: this.artistsList() });
+        return this.search.doSearch({ query, keys: ["name"], list: this.artistsList() });
     }
     searchAlbum(query) {
-        return this.search.doSearch({ query, list: this.sortedAlbums });
+        return this.search.doSearch({ query, keys: ["name"], list: this.sortedAlbums });
     }
     searchTrack(query) {
         return this.search.doSearch({
             query,
             keys: ["title"],
             list: this.trackList(),
+            fuziness: 0.5,
+        });
+    }
+    searchTrackByArtistAndTrack(artist, title) {
+        return this.search.doSearch({
+            query: { title, artist },
+            keys: [
+                { name: 'title', getFn: (track) => track.title },
+                { name: 'artist', getFn: (track) => track.albumArtist },
+            ],
+            list: this.trackList()
         });
     }
     getLatestAdditions(amount = 14) {

@@ -27,6 +27,7 @@ export declare class musicdbcore {
     searchArtist(query: string): any;
     searchAlbum(query: string): any;
     searchTrack(query: string): any;
+    searchTrackByArtistAndTrack(artist: string, title: string): any;
     getLatestAdditions(amount?: number): Album[];
     getNextAlbum(album: Album): Album;
     getNextArtist(artist: Artist): Artist;
