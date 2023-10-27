@@ -154,7 +154,6 @@ export class musicdbcore {
             query,
             keys: ["title"],
             list: this.trackList(),
-            fuziness: 0.5,
         });
     }
     searchTrackByArtistAndTrack(artist, title) {
@@ -164,7 +163,8 @@ export class musicdbcore {
                 { name: 'title', getFn: (track) => track.title },
                 { name: 'artist', getFn: (track) => track.albumArtist },
             ],
-            list: this.trackList()
+            list: this.trackList(),
+            fuziness: 0.5,
         });
     }
     getLatestAdditions(amount = 14) {
