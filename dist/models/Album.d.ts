@@ -14,7 +14,7 @@ export default class Album {
     type: string;
     isContinues: boolean;
     albumGain: number;
-    albummbid: string;
+    mbid: string;
     constructor(json: any);
     url(): string;
 }
