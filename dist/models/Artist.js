@@ -8,6 +8,7 @@ export default class Artist {
     sortName = "";
     escapedName = "";
     isCollection = false;
+    artistmbid = "";
     constructor(json) {
         // a dummy artist is only used to search for a core artist but is not stored in the core.
         if ((json.album && json.title) || json.dummy) {
@@ -24,6 +25,7 @@ export default class Artist {
             this.isCollection = this.albumArtist
                 ? this.name !== this.albumArtist
                 : false;
+            this.artistmbid = json.artistmbid || "";
         }
     }
     url() {

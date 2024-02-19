@@ -10,6 +10,7 @@ export default class Artist {
     sortName: string;
     escapedName: string;
     isCollection: boolean;
+    artistmbid: string;
     constructor(json: any);
     url(): string;
     sortAlbumsBy(sortkey?: string, direction?: string): void;

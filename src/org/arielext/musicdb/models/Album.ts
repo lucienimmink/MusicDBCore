@@ -15,6 +15,7 @@ export default class Album {
   public type: string = "";
   public isContinues = true;
   public albumGain: number = 0;
+  public albummbid: string = "";
 
   constructor(json: any) {
     if (json.album && json.title) {
@@ -24,6 +25,7 @@ export default class Album {
       this.year = json.year;
       this.modified = json.modified;
       this.albumGain = json.albumgain || 0;
+      this.albummbid = json.albummbid || "";
 
       // strip month/day from universal date strings
       if (this.year && this.year.indexOf("-") !== -1) {
