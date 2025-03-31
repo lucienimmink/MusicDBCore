@@ -27,6 +27,11 @@ export default class Track {
   public image: string = "";
   public trackGain: number = 0;
 
+  public samplerate: number = 0;
+  public bitrate: number = 0;
+  public channels: number = 0;
+  public bits_per_sample: number = 0;
+
   constructor(json: any) {
     if (json.album && json.title) {
       this.id = json.id;
@@ -42,6 +47,11 @@ export default class Track {
       this.trackArtist = json.artist;
       this.type = json.type || "mp3";
       this.trackGain = json.trackgain || 0;
+
+      this.samplerate = json.samplerate || 0;
+      this.bitrate = json.bitrate || 0;
+      this.channels = json.channels || 2;
+      this.bits_per_sample = json.bits_per_sample || 0;
     }
   }
 

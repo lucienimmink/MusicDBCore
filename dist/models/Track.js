@@ -23,6 +23,10 @@ export default class Track {
     nowPlaying = false;
     image = "";
     trackGain = 0;
+    samplerate = 0;
+    bitrate = 0;
+    channels = 0;
+    bits_per_sample = 0;
     constructor(json) {
         if (json.album && json.title) {
             this.id = json.id;
@@ -38,6 +42,10 @@ export default class Track {
             this.trackArtist = json.artist;
             this.type = json.type || "mp3";
             this.trackGain = json.trackgain || 0;
+            this.samplerate = json.samplerate || 0;
+            this.bitrate = json.bitrate || 0;
+            this.channels = json.channels || 2;
+            this.bits_per_sample = json.bits_per_sample || 0;
         }
     }
     url() {

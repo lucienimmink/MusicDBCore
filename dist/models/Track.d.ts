@@ -22,6 +22,10 @@ export default class Track {
     nowPlaying: boolean;
     image: string;
     trackGain: number;
+    samplerate: number;
+    bitrate: number;
+    channels: number;
+    bits_per_sample: number;
     constructor(json: any);
     url(): string;
     toJSON(): string;
